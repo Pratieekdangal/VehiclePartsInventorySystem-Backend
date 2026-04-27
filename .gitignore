@@ -1,0 +1,26 @@
+# Build outputs
+**/bin/
+**/obj/
+**/*.user
+**/.vs/
+**/.vscode/
+
+# IDE / OS
+.idea/
+*.suo
+.DS_Store
+Thumbs.db
+
+# Local SQLite (seeded with hashed passwords — not for git)
+*.db
+*.db-journal
+*.db-shm
+*.db-wal
+
+# Logs
+*.log
+logs/
+
+# Local-only secrets
+appsettings.Development.json
+*.pfx
