@@ -56,7 +56,15 @@ public class ReportService : IReportService
         var salesAmount = await _db.SalesInvoices.Where(s => s.InvoiceDate >= todayStart).SumAsync(s => (decimal?)s.TotalAmount) ?? 0m;
         var pendingCount = await _db.SalesInvoices.CountAsync(s => s.BalanceDue > 0);
         var pendingAmount = await _db.SalesInvoices.SumAsync(s => (decimal?)s.BalanceDue) ?? 0m;
-        return new StaffDashboardStatsDto(customersToday, salesToday, salesAmount, pendingCount, pendingAmount);
+        var loyaltyToday = await _db.SalesInvoices
+            .CountAsync(s => s.InvoiceDate >= todayStart && s.IsLoyaltyDiscountApplied);
+        var loyaltySavings = await _db.SalesInvoices
+            .Where(s => s.InvoiceDate >= todayStart && s.IsLoyaltyDiscountApplied)
+            .SumAsync(s => (decimal?)s.DiscountAmount) ?? 0m;
+        return new StaffDashboardStatsDto(
+            customersToday, salesToday, salesAmount,
+            pendingCount, pendingAmount,
+            loyaltyToday, loyaltySavings);
     }
 
     public async Task<CustomerDashboardStatsDto> GetCustomerStatsAsync(Guid customerId)

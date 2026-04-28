@@ -18,7 +18,8 @@ public record CustomerSpendingDto(
 
 public record StaffDashboardStatsDto(
     int CustomersToday, int SalesToday, decimal SalesAmountToday,
-    int PendingCreditCount, decimal PendingCreditAmount
+    int PendingCreditCount, decimal PendingCreditAmount,
+    int LoyaltyAppliedToday, decimal LoyaltySavingsToday
 );
 
 public record CustomerDashboardStatsDto(
